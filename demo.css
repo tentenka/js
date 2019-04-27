@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    /*去掉默认的body和浏览器之间外边距，其他元素可能存在的padding内边距 */
+    padding: 0;
+}
+
+.startPage {
+    width: 100%;
+    z-index: 999;
+    /* 层级 */
+    height: 1000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* display: none; */
+}
+
+.startPage {
+    background-image: url('img/startPage.jpg');
+    height: 170px;
+    width: 200px;
+    background-size: 100% 100%;
+    cursor: pointer;
+    /* 鼠标覆盖有小手 */
+    position: absolute;
+    /*设置居中 */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.wrapper {
+    width: 80%;
+    height: 840px;
+    background-image: url('img/bj.png');
+    background-size: 100% 100%;
+    /*设置居中 */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.left-side {
+    width: 24%;
+    position: absolute;
+    height: 1000px;
+    border-right: 1px solid;
+}
+
+.left-side img {
+    /* display: none; */
+    margin-left: 50px;
+    margin-top: 50px;
+    width: 20%;
+}
+
+.main {
+    position: absolute;
+    left: 15%;
+    top: 60px;
+    width: 70%;
+    height: 87%;
+    border: 1px solid;
+}
+
+.header {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+}
+
+.score {
+    line-height: 80px;
+    color: #ddd;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    border: 1px solid red;
+}
