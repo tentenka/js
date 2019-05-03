@@ -27,6 +27,12 @@ function init() {
             [2, 1, 'body'],
             [1, 1, 'body']
         ] //第一值表示x值，第二值表示Y值
+        //游戏属性
+    this.direct = 'right';
+    this.left = false;
+    this.right = false;
+    this.up = true;
+    this.down = true;
     startGame();
 }
 
@@ -54,9 +60,41 @@ function snake() {
         snake.style.width = this.snakeW + 'px';
         snake.style.height = this.snakeH + 'px';
         snake.style.position = 'absolute';
-        snake.style.left = this.snakeBody[i][0] * 20 + 'px';
-        snake.style.top = this.snakeBody[i][1] * 20 + 'px';
-        snake.classList.add(this.snakeBody[i][2]);
+        snake.style.left = this.snakeBody[i][0] * 20 + 'px'; //[i]取出来snakebody循环中的每一位，[0]代表第i位里的第0个元素，这里则是3，x的位置
+        snake.style.top = this.snakeBody[i][1] * 20 + 'px'; //找y的坐标
+        snake.classList.add(this.snakeBody[i][2]); //取出当前的蛇身对应的class类名
         this.mapDiv.appendChild(snake).classList.add('snake');
+    }
+}
+
+function move() {
+    for (var i = 0; i < this.snakeBody.length; i++) {
+        this.snakeBody[i][0] = this.snakeBody[i - 1][0];
+        this.snakeBody[i][1] = this.snakeBody[i - 1][1];
+    }
+    switch (this.direct) {
+        case 'right':
+            this.snakeBody[0][0] += 1;
+            break;
+        case 'up':
+            this.snakeBody[0][1] -= 1;
+            break;
+        case 'left':
+            this.snakeBody[0][0] -= 1;
+            break;
+        case 'down':
+            this.snakeBody[0][1] += 1;
+            break;
+        default:
+            break;
+    }
+    removeClass('snake');
+    snake();
+}
+
+function removeClass(className) {
+    var ele = document.getElementsByClassName(className);
+    while (ele.length > 0) {
+        ele[0].parentNode.removeChild(ele[0]);
     }
 }
