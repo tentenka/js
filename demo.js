@@ -6,6 +6,8 @@
 
 var content = document.getElementById('content');
 var startPage = document.getElementById('startPage');
+var snakeMove;
+var speed = 200;
 
 init();
 
@@ -28,11 +30,13 @@ function init() {
             [1, 1, 'body']
         ] //第一值表示x值，第二值表示Y值
         //游戏属性
-    this.direct = 'right';
+    this.direct = 'right'; //游戏初始默认向右
     this.left = false;
     this.right = false;
     this.up = true;
     this.down = true;
+
+
     startGame();
 }
 
@@ -40,6 +44,10 @@ function startGame() {
 
     food();
     snake();
+    snakeMove = setInterval(function() {
+        move();
+    }, speed);
+    bindEvent();
 }
 
 function food() {
@@ -68,12 +76,12 @@ function snake() {
 }
 
 function move() {
-    for (var i = 0; i < this.snakeBody.length; i++) {
-        this.snakeBody[i][0] = this.snakeBody[i - 1][0];
-        this.snakeBody[i][1] = this.snakeBody[i - 1][1];
+    for (var i = this.snakeBody.length - 1; i > 0; i--) { //不考虑方向的改变，只考虑水平的运动
+        this.snakeBody[i][0] = this.snakeBody[i - 1][0]; //后一个身体的等于前一个身体的x坐标
+        this.snakeBody[i][1] = this.snakeBody[i - 1][1]; //后一个身体的Y等于前一个身体的y
     }
-    switch (this.direct) {
-        case 'right':
+    switch (this.direct) { //获取当前的方向
+        case 'right': //当是right蛇头的方向是
             this.snakeBody[0][0] += 1;
             break;
         case 'up':
@@ -85,16 +93,69 @@ function move() {
         case 'down':
             this.snakeBody[0][1] += 1;
             break;
-        default:
+        default: //都不是的情况下
             break;
     }
-    removeClass('snake');
-    snake();
+    removeClass('snake'); //原来的蛇删掉
+    snake(); //重新渲染一条蛇
 }
 
-function removeClass(className) {
+function removeClass(className) { //删掉具有className的元素
     var ele = document.getElementsByClassName(className);
     while (ele.length > 0) {
         ele[0].parentNode.removeChild(ele[0]);
+    }
+}
+
+function setDerict(code) {
+    switch (code) {
+        case 37:
+            if (this.left) {
+                this.direct = 'left';
+                this.left = false;
+                this.right = false;
+                this.up = true;
+                this.down = true;
+            }
+            break;
+
+        case 38:
+            if (this.up) {
+                this.direct = 'up';
+                this.left = true;
+                this.right = true;
+                this.up = false;
+                this.down = false;
+            }
+            break;
+        case 39:
+            if (this.right) {
+                this.direct = 'right';
+                this.left = true;
+                this.right = true;
+                this.up = false;
+                this.down = false;
+            }
+            break;
+        case 40:
+            if (this.down) {
+                this.direct = 'down';
+                this.left = true;
+                this.right = true;
+                this.up = false;
+                this.down = false;
+            }
+            break;
+        default:
+            break;
+
+
+    }
+}
+
+function bindEvent() {
+    document.onkeydown = function(e) {
+        var code = e.keyCode
+        setDerict(code);
     }
 }
