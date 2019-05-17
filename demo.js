@@ -4,6 +4,7 @@
 //判断是否吃到食物-->食物消失，蛇+1
 //判断游戏结束，弹出分数框
 
+var scoreBox = document.getElementById('score');
 var content = document.getElementById('content');
 var startPage = document.getElementById('startPage');
 var snakeMove;
@@ -35,6 +36,7 @@ function init() {
     this.right = false;
     this.up = true;
     this.down = true;
+    this.score = 0;
 
 
     startGame();
@@ -60,6 +62,21 @@ function food() {
     food.style.left = this.foodX * 20 + 'px';
     food.style.top = this.foodY * 20 + 'px';
     this.mapDiv.appendChild(food).setAttribute('class', 'food'); //让食物成为地图的子节点，setAttribute设置属性名和属性值
+    switch (this.direct) {
+        case 'right':
+            break;
+        case 'up':
+            snake.style.transform = 'rotate(270deg)';
+            break;
+        case 'left':
+            snake.style.transform = 'rotate(180deg)';
+            break;
+        case 'down':
+            snake.style.transform = 'rotate(90deg)';
+            break;
+        default:
+            break;
+    }
 }
 
 function snake() {
@@ -98,6 +115,13 @@ function move() {
     }
     removeClass('snake'); //原来的蛇删掉
     snake(); //重新渲染一条蛇
+    if (this.snakeBody[0][0] == this.foodX && this.snakeBody[0][1] == this.foodY) {
+        this.score += 1;
+        scoreBox.innerHTML = this.score;
+        removeClass('food'); //计算分数后食物消失，再重新生成食物
+        food()
+
+    }
 }
 
 function removeClass(className) { //删掉具有className的元素
