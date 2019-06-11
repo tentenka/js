@@ -4,10 +4,12 @@
 //判断是否吃到食物-->食物消失，蛇+1
 //判断游戏结束，弹出分数框
 
+var lose = document.getElementById('lose')
 var scoreBox = document.getElementById('score');
 var content = document.getElementById('content');
 var startPage = document.getElementById('startPage');
 var snakeMove;
+var loserScore = document.getElementById('loserScore')
 var speed = 200;
 
 init();
@@ -116,12 +118,68 @@ function move() {
     removeClass('snake'); //原来的蛇删掉
     snake(); //重新渲染一条蛇
     if (this.snakeBody[0][0] == this.foodX && this.snakeBody[0][1] == this.foodY) {
+        var snakeEndX = this.snakeBody[this.snakeBody.length - 1][0];
+        var snakeEndY = this.snakeBody[this.snakeBody.length - 1][1];
+        switch (this.direct) { //获取当前的方向
+            case 'right': //当是right蛇头的方向是
+                this.snakeBody.push([snakeEndX + 1, snakeEndY, 'body']);
+                break;
+            case 'up':
+                this.snakeBody.push([snakeEndX, snakeEndY - 1, 'body']);
+                break;
+            case 'left':
+                this.snakeBody.push([snakeEndX - 1, snakeEndY, 'body']);
+                break;
+            case 'down':
+                this.snakeBody.push([snakeEndX, snakeEndY + 1, 'body']);
+                break;
+            default: //都不是的情况下
+                break;
+        }
+
         this.score += 1;
         scoreBox.innerHTML = this.score;
         removeClass('food'); //计算分数后食物消失，再重新生成食物
         food()
 
     }
+
+    if (this.snakeBody[0][0] < 0 || this.snakeBody[0][0] >= this.mapW / 20) {
+        relodGame()
+    }
+    if (this.snakeBody[0][1] < 0 || this.snakeBody[0][1] >= this.mapH / 20) {
+        relodGame()
+    }
+
+    //取出蛇头
+    var snakeHX = this.snakeBody[0][0];
+    var snakeHY = this.snakeBody[0][1];
+    for (var i = 1; i < this.snakeBody.length; i++) {
+        if (snakeHX == snakeBody[i][0] && snakeHY == snakeBody[i][1]) {
+            relodGame()
+        }
+    }
+}
+
+function relodGame() {
+    removeClass('snake');
+    removeClass('food');
+    clearInterval(snakeMove);
+    this.snakeBody = [
+        [3, 1, 'head'],
+        [2, 1, 'body'],
+        [1, 1, 'body']
+    ];
+    this.direct = 'right'; //游戏初始默认向右
+    this.left = false;
+    this.right = false;
+    this.up = true;
+    this.down = true;
+    this.score = 0;
+    lose.style.display = 'block';
+    loserScore.innerHTML = this.score;
+    this.score = 0;
+
 }
 
 function removeClass(className) { //删掉具有className的元素
