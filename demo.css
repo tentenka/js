@@ -15,8 +15,8 @@
     /* display: none; */
 }
 
-.startPage {
-    background-image: url('img/startPage.jpg');
+.startBtn {
+    background-image: url('img/startGame.jpg');
     height: 170px;
     width: 200px;
     background-size: 100% 100%;
@@ -31,9 +31,9 @@
 }
 
 .wrapper {
-    width: 80%;
-    height: 840px;
-    background-image: url('img/bj.png');
+    width: 90%;
+    height: 800px;
+    background-color: #222;
     background-size: 100% 100%;
     /*设置居中 */
     top: 0;

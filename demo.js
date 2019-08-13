@@ -54,9 +54,9 @@ function startGame() {
     startP.style.display = 'block';
     food();
     snake();
-    snakeMove = setInterval(function() {
-        move();
-    }, speed);
+    // snakeMove = setInterval(function() {
+    //     move();
+    // }, speed);
     bindEvent();
 }
 
@@ -271,6 +271,9 @@ function startAndPaush() {
             var code = e.keyCode
             setDerict(code);
         }
+        snakeMove = setInterval(function() {
+            move();
+        }, speed);
         startPaushBool = false;
     } else {
         startP.setAttribute('src', './img/start.png');
