@@ -4,14 +4,19 @@
 //判断是否吃到食物-->食物消失，蛇+1
 //判断游戏结束，弹出分数框
 
+var startP = document.getElementById('startP')
+var startPage = document.getElementById('startPage')
 var lose = document.getElementById('lose')
 var scoreBox = document.getElementById('score');
 var content = document.getElementById('content');
 var startPage = document.getElementById('startPage');
 var snakeMove;
+var close = document.getElementById('close');
 var loserScore = document.getElementById('loserScore')
 var speed = 200;
-
+var startGameBool = true;
+var startPaushBool = true;
+var startBtn = document.getElementById('startBtn')
 init();
 
 function init() {
@@ -45,7 +50,8 @@ function init() {
 }
 
 function startGame() {
-
+    startPage.style.display = 'none';
+    startP.style.display = 'block';
     food();
     snake();
     snakeMove = setInterval(function() {
@@ -179,6 +185,7 @@ function relodGame() {
     lose.style.display = 'block';
     loserScore.innerHTML = this.score;
     this.score = 0;
+    scoreBox.innerHTML = this.score;
 
 }
 
@@ -236,8 +243,42 @@ function setDerict(code) {
 }
 
 function bindEvent() {
-    document.onkeydown = function(e) {
-        var code = e.keyCode
-        setDerict(code);
+    // document.onkeydown = function(e) {
+    //     var code = e.keyCode
+    //     setDerict(code);
+    // }
+    close.onclick = function() {
+        lose.style.display = 'none';
+    }
+
+    startBtn.onclick = function() {
+        startAndPaush();
+    }
+
+    startP.onclick = function() {
+        startAndPaush();
+    }
+}
+
+function startAndPaush() {
+    if (startPaushBool) {
+        if (startGameBool) {
+            startGame();
+            startGameBool = false;
+        }
+        startP.setAttribute('src', './img/pause.img');
+        document.onkeydown = function(e) {
+            var code = e.keyCode
+            setDerict(code);
+        }
+        startPaushBool = false;
+    } else {
+        startP.setAttribute('src', './img/start.img');
+        clearInterval(snakeMove);
+        document.onkeydown = function(e) {
+            e.returnValue = false;
+            return false;
+        };
+        startPaushBool = true;
     }
 }
