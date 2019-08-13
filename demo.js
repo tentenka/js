@@ -266,14 +266,14 @@ function startAndPaush() {
             startGame();
             startGameBool = false;
         }
-        startP.setAttribute('src', './img/pause.img');
+        startP.setAttribute('src', './img/pause.png');
         document.onkeydown = function(e) {
             var code = e.keyCode
             setDerict(code);
         }
         startPaushBool = false;
     } else {
-        startP.setAttribute('src', './img/start.img');
+        startP.setAttribute('src', './img/start.png');
         clearInterval(snakeMove);
         document.onkeydown = function(e) {
             e.returnValue = false;
